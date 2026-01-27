@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Youtube, Check, Copy, ExternalLink, Play, Cpu, Activity, Zap, Flag, Target, Layers } from 'lucide-react';
+import { Check, Copy, ExternalLink, Play, Cpu, Activity, Zap, Flag, Target, Layers } from 'lucide-react';
 
 // --- FLARE 论文数据配置 ---
 const paperData = {
   title: "FLARE: Agile Flights for Quadrotor Cable-Suspended Payload System via Reinforcement Learning",
   publication: "IEEE Robotics and Automation Letters (RA-L), Accepted January 2026", 
   authors: [
-    { name: "Dongcheng Cao", url: "#" },
-    { name: "Jin Zhou", url: "#" },
-    { name: "Xian Wang", url: "#" },
-    { name: "Shuo Li", url: "#" },
+    { name: "Dongcheng Cao", url: "https://scholar.google.com/citations?user=dXMBf_0AAAAJ&hl=zh-CN&oi=sra" },
+    { name: "Jin Zhou", url: "https://scholar.google.com/citations?user=ubQnCiQAAAAJ&hl=zh-CN&oi=sra" },
+    { name: "Xian Wang", url: "https://scholar.google.com/citations?user=r8ugMOwAAAAJ&hl=zh-CN&oi=sra" },
+    { name: "Shuo Li", url: "https://scholar.google.com/citations?user=-MINoSEAAAAJ&hl=zh-CN&oi=sra" },
   ],
   affiliations: [
     { name: "College of Control Science and Engineering, Zhejiang University" },
@@ -21,12 +21,11 @@ const paperData = {
     Notably, our method outperforms a state-of-the-art optimization-based approach (Impactor) by a 3x speedup during gate traversal maneuvers. 
     Furthermore, the learned policies achieve successful zero-shot sim-to-real transfer, demonstrating remarkable agility and safety in real-world experiments.
   `,
-  bibtex: `@article{cao2026flare,
+  bibtex: `@article{cao2025flare,
   title={FLARE: Agile Flights for Quadrotor Cable-Suspended Payload System via Reinforcement Learning},
   author={Cao, Dongcheng and Zhou, Jin and Wang, Xian and Li, Shuo},
-  journal={IEEE Robotics and Automation Letters},
-  year={2026},
-  publisher={IEEE}
+  journal={arXiv preprint arXiv:2508.09797},
+  year={2025}
 }`,
   links: {
     pdf: "#", // PDF 链接
@@ -44,39 +43,17 @@ const COLORS = {
   textLink: "text-[#003f88]",
 };
 
-// --- 官方品牌图标组件 (SVG Paths) ---
-
-// 1. PDF (Adobe Acrobat Official Icon)
-const PdfIcon = ({ size = 16, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-    <path d="M23.63 15.3c-.71-.77-5.4-6.57-5.4-11.4A3.9 3.9 0 0 0 14.33 0c-3.1 0-3.33 3.97-3.33 4.6 0 .34.25 3.9 3.2 7.7.74.96 1.95 2.15 4.93 2.9h.03c1.78.48 4.5 1.53 4.5 3.32 0 3.34-5.6 5.46-8.24 5.46-4.5 0-9.42-3.38-9.42-9.62 0-2.8 1.6-5.4 4.38-7.1 1.72-1.05 3.4-1.4 3.4-1.4.67-.14 1-.84.77-1.4-.22-.54-.92-.83-1.63-.66-.1.02-3.37 1.05-6.07 3.36C2.2 10.15 0 13.56 0 17.38c0 7.8 7.3 6.6 8.5 6.6 11.23.1 15.5-8.58 15.13-8.68z"/>
-  </svg>
-);
-
-// 2. ArXiv (Official Logomark - The "X")
-const ArxivIcon = ({ size = 16, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-    <path d="M12.48 9.53L12.88 10.05L7.11 18.4H5.11L9.2 11.2L8.83 10.72L3.25 2.24H5.26L9.6 8.05L9.96 8.53L15.57 2.24H17.57L12.48 9.53Z"/>
-  </svg>
-);
-
-// 3. Bilibili (Official TV Icon)
-const BilibiliIcon = ({ size = 16, className = "" }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.813 4.653h.854c1.51.054 2.769.76 3.46 1.943.52 1.13.418 2.306.417 2.31v6.967c-.002 1.576-1.072 2.768-2.73 3.097-1.08.16-2.613.06-2.613.06l-9.975.053c-1.89 0-3.08-1.28-3.155-2.825V8.92c-.004-1.12.35-2.31 1.258-3.08 1.12-.86 2.593-.763 2.73-.75l.937-.02L7.33 2.95l1.622-.55 2.59 4.02c3.41-.39 5.676-1.253 6.27-1.767zM7.5 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm9 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-  </svg>
-);
-
 // --- 组件部分 ---
 
-const Button = ({ icon: Icon, text, href }) => (
+// 修改后的 Button 组件：接收 iconSrc (图片路径) 而不是 Icon 组件
+const Button = ({ iconSrc, text, href }) => (
   <a 
     href={href}
     target="_blank"
     rel="noreferrer"
     className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-white ${COLORS.primary} ${COLORS.primaryHover}`}
   >
-    {Icon && <Icon size={18} />}
+    {iconSrc && <img src={iconSrc} alt={text} className="w-5 h-5" style={{ fill: 'currentColor' }} />}
     <span>{text}</span>
   </a>
 );
@@ -95,7 +72,13 @@ const AuthorBlock = () => (
     <div className="flex flex-wrap justify-center gap-x-10 gap-y-2 text-lg font-medium text-slate-800 mb-4">
       {paperData.authors.map((author, idx) => (
         <span key={idx} className="relative">
-          <a href={author.url} className={`${COLORS.textLink} hover:underline`}>
+          {/* 这里添加了超链接 */}
+          <a 
+            href={author.url} 
+            target="_blank" 
+            rel="noreferrer" 
+            className={`${COLORS.textLink} hover:underline transition-colors`}
+          >
             {author.name}
           </a>
         </span>
@@ -111,13 +94,35 @@ const AuthorBlock = () => (
   </div>
 );
 
+// 视频/图片占位符
+const MediaPlaceholder = ({ height = "h-64", label = "Visual", type = "generic", caption = "" }) => (
+  <div className="flex flex-col gap-2">
+    <div className={`w-full ${height} bg-slate-100 rounded-lg border border-slate-300 flex items-center justify-center relative overflow-hidden group shadow-inner`}>
+      <div className="absolute inset-0" 
+           style={{
+             backgroundImage: 'linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)',
+             backgroundSize: '40px 40px',
+             opacity: 0.3
+           }}>
+      </div>
+      
+      <div className="z-10 bg-white/90 backdrop-blur px-6 py-3 rounded-md border border-slate-200 shadow-sm flex flex-col items-center text-center">
+        {label.toLowerCase().includes("video") ? <Play size={40} className="text-[#003f88] mb-2 fill-current opacity-80" /> : <Activity size={32} className="text-slate-800 mb-2" />}
+        <span className="font-mono text-sm font-bold text-slate-700 uppercase tracking-wide">{label}</span>
+        <span className="text-xs text-slate-500 mt-1">(Replace with &lt;video&gt; or &lt;img&gt;)</span>
+      </div>
+    </div>
+    {caption && <p className="text-sm text-slate-600 italic text-center px-4">{caption}</p>}
+  </div>
+);
+
 // 核心场景展示组件
 const ScenarioShowcase = () => {
   return (
     <div className="space-y-16">
       
       {/* Scenario 1 */}
-      {/* 修改为 grid-cols-5 (3+2)。文字占2份，图片占3份。比例 3:2 */}
+      {/* 3:2 比例 (图片3 : 文字2) */}
       <div className="grid md:grid-cols-5 gap-8 items-center">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
@@ -140,7 +145,6 @@ const ScenarioShowcase = () => {
           </ul>
         </div>
         
-        {/* GIF 1 (占 3/5) */}
         <div className="md:col-span-3 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
            <img 
              src="./scenario1.gif" 
@@ -151,7 +155,6 @@ const ScenarioShowcase = () => {
       </div>
 
       {/* Scenario 2 */}
-      {/* 修改为 grid-cols-5。文字占2份，图片占3份 */}
       <div className="grid md:grid-cols-5 gap-8 items-center">
         {/* Text 部分：在桌面端通过 order-2 放在右边 */}
         <div className="md:col-span-2 md:order-2">
@@ -175,7 +178,6 @@ const ScenarioShowcase = () => {
           </ul>
         </div>
         
-        {/* GIF 2 (占 3/5)：在桌面端通过 order-1 放在左边 */}
         <div className="md:col-span-3 md:order-1 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
            <img 
              src="./scenario2.gif" 
@@ -186,7 +188,6 @@ const ScenarioShowcase = () => {
       </div>
 
       {/* Scenario 3 */}
-      {/* 修改为 grid-cols-5。文字占2份，图片占3份 */}
       <div className="grid md:grid-cols-5 gap-8 items-center">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
@@ -213,7 +214,6 @@ const ScenarioShowcase = () => {
           </ul>
         </div>
         
-        {/* GIF 3 (占 3/5) */}
         <div className="md:col-span-3 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
            <img 
              src="./scenario3.gif" 
@@ -260,7 +260,7 @@ export default function RobotPaperPage() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="font-bold text-xl tracking-tight text-slate-800 flex items-center gap-2">
             <span className="bg-[#003f88] text-white px-2 py-0.5 rounded font-serif">ZJU</span>
-            <span>NESC</span>
+            <span>NESC-Lab</span>
           </div>
           <div className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
             <a href="#abstract" className="hover:text-[#003f88]">Abstract</a>
@@ -287,11 +287,11 @@ export default function RobotPaperPage() {
 
           {/* 统一风格的按钮区域 */}
           <div className="flex flex-wrap justify-center gap-4 mt-8">
-            <Button icon={PdfIcon} text="Paper" href={paperData.links.pdf} />
-            <Button icon={ArxivIcon} text="ArXiv" href={paperData.links.arxiv} />
-            <Button icon={Github} text="Code" href={paperData.links.code} />
-            <Button icon={Youtube} text="Video" href={paperData.links.youtube} />
-            <Button icon={BilibiliIcon} text="Bilibili" href={paperData.links.bilibili} />
+            <Button iconSrc="./pdf.svg" text="Paper" href={paperData.links.pdf} />
+            <Button iconSrc="./arxiv.svg" text="ArXiv" href={paperData.links.arxiv} />
+            <Button iconSrc="./github.svg" text="Code" href={paperData.links.code} />
+            <Button iconSrc="./youtube.svg" text="Video" href={paperData.links.youtube} />
+            <Button iconSrc="./bilibili.svg" text="Bilibili" href={paperData.links.bilibili} />
           </div>
         </div>
 
@@ -310,7 +310,6 @@ export default function RobotPaperPage() {
 
         {/* Abstract */}
         <Section title="Abstract" id="abstract">
-          {/* 添加 text-justify 实现两端对齐 */}
           <div className="bg-slate-50 p-8 rounded-xl border-l-4 border-[#003f88] max-w-5xl mx-auto shadow-sm text-justify">
             <p className="text-base md:text-lg leading-relaxed text-slate-800 font-serif">
               {paperData.abstract}
@@ -320,45 +319,44 @@ export default function RobotPaperPage() {
 
         {/* Method Overview */}
         <Section title="Methodology: FLARE Framework" id="method">
-          <div className="grid md:grid-cols-4 gap-12 items-center">
-            <div className="md:col-span-1">
-              <h3 className="text-xl font-bold mb-4 text-slate-800">Direct Sim-to-Real RL Policy</h3>
-              {/* 添加 text-justify 实现两端对齐 */}
-              <p className="text-slate-700 mb-4 leading-relaxed text-justify">
-                We formulate the problem as a Markov Decision Process (MDP) and train a neural network policy using <strong>PPO</strong> in the high-fidelity <strong>Genesis</strong> simulator.
-              </p>
-              <ul className="space-y-3 mb-6 text-slate-700">
-                <li className="flex items-start">
-                  <Zap className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
-                  <span className="text-justify"><strong>Model-Free:</strong> Eliminates reliance on complex gradients of hybrid dynamics (slack/taut cables).</span>
-                </li>
-                <li className="flex items-start">
-                  <Cpu className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
-                  <span className="text-justify"><strong>Real-Time Inference:</strong> Runs efficiently on onboard computers (Cool Pi) at 100Hz.</span>
-                </li>
-                <li className="flex items-start">
-                  <Activity className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
-                  <span className="text-justify"><strong>Zero-Shot Transfer:</strong> Domain randomization ensures robustness against real-world disturbances.</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="md:col-span-3 w-full bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 p-2">
-               <img 
-                 src="./methodology.png" 
-                 className="w-full h-auto" 
-                 alt="Methodology Framework" 
-               />
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-4 gap-12 items-center">
+              <div className="md:col-span-1">
+                <h3 className="text-xl font-bold mb-4 text-slate-800">Direct Sim2Real RL Policy</h3>
+                <p className="text-slate-700 mb-4 leading-relaxed text-justify">
+                  We formulate the problem as a Markov Decision Process (MDP) and train a neural network policy using <strong>PPO</strong> in the high-fidelity <strong>Genesis</strong> simulator.
+                </p>
+                <ul className="space-y-3 mb-6 text-slate-700">
+                  <li className="flex items-start">
+                    <Zap className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
+                    <span className="text-justify"><strong>Model-Free:</strong> <br></br> Eliminates the reliance on gradients of complex hybrid dynamics (slack/taut cables).</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Cpu className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
+                    <span className="text-justify"><strong>Real-Time Inference:</strong> <br></br>Runs efficiently on onboard computers (Cool Pi) at 100Hz.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Activity className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
+                    <span className="text-justify"><strong>Zero-Shot Transfer:</strong> <br></br> Domain randomization(DR) ensures robustness against real-world disturbances.</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="md:col-span-3 w-full bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 p-2">
+                 <img 
+                   src="./methodology.png" 
+                   className="w-full h-auto" 
+                   alt="Methodology Framework" 
+                 />
+              </div>
             </div>
           </div>
         </Section>
 
         {/* Three Scenarios Section */}
         <Section title="Three Challenging Scenarios" id="scenarios">
-          {/* 1. 将宽度从 max-w-3xl 改为 max-w-5xl (或 max-w-6xl) 以容纳在一行
-              2. 添加 text-justify 以实现两端对齐 */}
           <p className="mb-10 text-slate-600 max-w-5xl text-justify">
-            We validate FLARE across three distinct tasks that require exploiting the full potential of the underactuated system dynamics.
+            We validate FLARE across <strong>three distinct scenarios</strong> that require exploiting the full potential of the underactuated system dynamics.
           </p>
           <ScenarioShowcase />
         </Section>
