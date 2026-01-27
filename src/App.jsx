@@ -111,43 +111,20 @@ const AuthorBlock = () => (
   </div>
 );
 
-// 视频/图片占位符
-const MediaPlaceholder = ({ height = "h-64", label = "Visual", type = "generic", caption = "" }) => (
-  <div className="flex flex-col gap-2">
-    <div className={`w-full ${height} bg-slate-100 rounded-lg border border-slate-300 flex items-center justify-center relative overflow-hidden group shadow-inner`}>
-      {/* 网格背景 */}
-      <div className="absolute inset-0" 
-           style={{
-             backgroundImage: 'linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)',
-             backgroundSize: '40px 40px',
-             opacity: 0.3
-           }}>
-      </div>
-      
-      {/* 模拟内容 */}
-      <div className="z-10 bg-white/90 backdrop-blur px-6 py-3 rounded-md border border-slate-200 shadow-sm flex flex-col items-center text-center">
-        {label.toLowerCase().includes("video") ? <Play size={40} className="text-[#003f88] mb-2 fill-current opacity-80" /> : <Activity size={32} className="text-slate-800 mb-2" />}
-        <span className="font-mono text-sm font-bold text-slate-700 uppercase tracking-wide">{label}</span>
-        <span className="text-xs text-slate-500 mt-1">(Replace with &lt;video&gt; or &lt;img&gt;)</span>
-      </div>
-    </div>
-    {caption && <p className="text-sm text-slate-600 italic text-center px-4">{caption}</p>}
-  </div>
-);
-
 // 核心场景展示组件
 const ScenarioShowcase = () => {
   return (
     <div className="space-y-16">
       
       {/* Scenario 1 */}
-      <div className="grid md:grid-cols-2 gap-8 items-center">
-        <div>
+      {/* 修改为 grid-cols-5 (3+2)。文字占2份，图片占3份。比例 3:2 */}
+      <div className="grid md:grid-cols-5 gap-8 items-center">
+        <div className="md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-blue-100 p-2 rounded-full text-[#003f88]"><Flag size={24} /></div>
             <h3 className="text-xl font-bold text-slate-800">Scenario I: Agile Waypoint Passing</h3>
           </div>
-          <p className="text-slate-700 leading-relaxed mb-4">
+          <p className="text-slate-700 leading-relaxed mb-4 text-justify">
             The policy learns to navigate the quadrotor through a sequence of waypoints at high speeds. 
             Unlike single-drone policies that fail under payload dynamics, <strong>FLARE</strong> accounts for the coupled system, ensuring stability even during aggressive maneuvers.
           </p>
@@ -162,17 +139,27 @@ const ScenarioShowcase = () => {
             </li>
           </ul>
         </div>
-        <MediaPlaceholder height="h-64" label="Scenario I Video (Real-world Flight)" type="video" />
+        
+        {/* GIF 1 (占 3/5) */}
+        <div className="md:col-span-3 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
+           <img 
+             src="./scenario1.gif" 
+             alt="Scenario I: Agile Waypoint Passing" 
+             className="w-full h-auto object-cover" 
+           />
+        </div>
       </div>
 
       {/* Scenario 2 */}
-      <div className="grid md:grid-cols-2 gap-8 items-center md:flex-row-reverse">
-        <div className="md:order-2">
+      {/* 修改为 grid-cols-5。文字占2份，图片占3份 */}
+      <div className="grid md:grid-cols-5 gap-8 items-center">
+        {/* Text 部分：在桌面端通过 order-2 放在右边 */}
+        <div className="md:col-span-2 md:order-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-purple-100 p-2 rounded-full text-purple-700"><Target size={24} /></div>
             <h3 className="text-xl font-bold text-slate-800">Scenario II: Payload Targeting</h3>
           </div>
-          <p className="text-slate-700 leading-relaxed mb-4">
+          <p className="text-slate-700 leading-relaxed mb-4 text-justify">
             The objective shifts from guiding the drone to directing the <strong>payload</strong> to specific coordinates. 
             The policy actively exploits the cable's swing dynamics, allowing the drone to brake early and "throw" the payload towards the target efficiently.
           </p>
@@ -187,17 +174,26 @@ const ScenarioShowcase = () => {
             </li>
           </ul>
         </div>
-        <MediaPlaceholder height="h-64" label="Scenario II Video (Payload Throwing)" type="video" className="md:order-1"/>
+        
+        {/* GIF 2 (占 3/5)：在桌面端通过 order-1 放在左边 */}
+        <div className="md:col-span-3 md:order-1 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
+           <img 
+             src="./scenario2.gif" 
+             alt="Scenario II: Payload Targeting" 
+             className="w-full h-auto object-cover" 
+           />
+        </div>
       </div>
 
       {/* Scenario 3 */}
-      <div className="grid md:grid-cols-2 gap-8 items-center">
-        <div>
+      {/* 修改为 grid-cols-5。文字占2份，图片占3份 */}
+      <div className="grid md:grid-cols-5 gap-8 items-center">
+        <div className="md:col-span-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-red-100 p-2 rounded-full text-red-700"><Layers size={24} /></div>
             <h3 className="text-xl font-bold text-slate-800">Scenario III: Agile Gate Traversal</h3>
           </div>
-          <p className="text-slate-700 leading-relaxed mb-4">
+          <p className="text-slate-700 leading-relaxed mb-4 text-justify">
             The most challenging scenario: traversing a narrow circular gate where the system size exceeds the gate diameter.
             <strong>FLARE</strong> achieves this 3x faster than the optimization-based baseline (Impactor).
           </p>
@@ -216,7 +212,15 @@ const ScenarioShowcase = () => {
             </li>
           </ul>
         </div>
-        <MediaPlaceholder height="h-64" label="Scenario III Video (Gate Traversal)" type="video" />
+        
+        {/* GIF 3 (占 3/5) */}
+        <div className="md:col-span-3 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
+           <img 
+             src="./scenario3.gif" 
+             alt="Scenario III: Agile Gate Traversal" 
+             className="w-full h-auto object-cover" 
+           />
+        </div>
       </div>
 
     </div>
@@ -306,8 +310,9 @@ export default function RobotPaperPage() {
 
         {/* Abstract */}
         <Section title="Abstract" id="abstract">
-          <div className="bg-slate-50 p-8 rounded-xl border-l-4 border-[#003f88] max-w-5xl mx-auto shadow-sm">
-            <p className="text-base md:text-lg leading-relaxed text-slate-800 text-justify font-serif">
+          {/* 添加 text-justify 实现两端对齐 */}
+          <div className="bg-slate-50 p-8 rounded-xl border-l-4 border-[#003f88] max-w-5xl mx-auto shadow-sm text-justify">
+            <p className="text-base md:text-lg leading-relaxed text-slate-800 font-serif">
               {paperData.abstract}
             </p>
           </div>
@@ -315,31 +320,30 @@ export default function RobotPaperPage() {
 
         {/* Method Overview */}
         <Section title="Methodology: FLARE Framework" id="method">
-          {/* 修改 grid-cols 比例，从 grid-cols-2 改为 grid-cols-3。文字占1份，图片占2份 */}
-          <div className="grid md:grid-cols-3 gap-12 items-center">
+          <div className="grid md:grid-cols-4 gap-12 items-center">
             <div className="md:col-span-1">
               <h3 className="text-xl font-bold mb-4 text-slate-800">Direct Sim-to-Real RL Policy</h3>
-              <p className="text-slate-700 mb-4 leading-relaxed">
+              {/* 添加 text-justify 实现两端对齐 */}
+              <p className="text-slate-700 mb-4 leading-relaxed text-justify">
                 We formulate the problem as a Markov Decision Process (MDP) and train a neural network policy using <strong>PPO</strong> in the high-fidelity <strong>Genesis</strong> simulator.
               </p>
               <ul className="space-y-3 mb-6 text-slate-700">
                 <li className="flex items-start">
                   <Zap className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
-                  <span><strong>Model-Free:</strong> Eliminates reliance on complex gradients of hybrid dynamics (slack/taut cables).</span>
+                  <span className="text-justify"><strong>Model-Free:</strong> Eliminates reliance on complex gradients of hybrid dynamics (slack/taut cables).</span>
                 </li>
                 <li className="flex items-start">
                   <Cpu className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
-                  <span><strong>Real-Time Inference:</strong> Runs efficiently on onboard computers (Cool Pi) at 100Hz.</span>
+                  <span className="text-justify"><strong>Real-Time Inference:</strong> Runs efficiently on onboard computers (Cool Pi) at 100Hz.</span>
                 </li>
                 <li className="flex items-start">
                   <Activity className="text-[#003f88] mt-1 mr-3 flex-shrink-0" size={18} />
-                  <span><strong>Zero-Shot Transfer:</strong> Domain randomization ensures robustness against real-world disturbances.</span>
+                  <span className="text-justify"><strong>Zero-Shot Transfer:</strong> Domain randomization ensures robustness against real-world disturbances.</span>
                 </li>
               </ul>
             </div>
             
-            {/* 修改区域：跨两列 (md:col-span-2) */}
-            <div className="md:col-span-2 w-full bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 p-2">
+            <div className="md:col-span-3 w-full bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 p-2">
                <img 
                  src="./methodology.png" 
                  className="w-full h-auto" 
@@ -351,7 +355,9 @@ export default function RobotPaperPage() {
 
         {/* Three Scenarios Section */}
         <Section title="Three Challenging Scenarios" id="scenarios">
-          <p className="mb-10 text-slate-600 max-w-3xl">
+          {/* 1. 将宽度从 max-w-3xl 改为 max-w-5xl (或 max-w-6xl) 以容纳在一行
+              2. 添加 text-justify 以实现两端对齐 */}
+          <p className="mb-10 text-slate-600 max-w-5xl text-justify">
             We validate FLARE across three distinct tasks that require exploiting the full potential of the underactuated system dynamics.
           </p>
           <ScenarioShowcase />
