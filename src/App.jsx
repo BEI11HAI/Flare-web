@@ -21,11 +21,12 @@ const paperData = {
     Notably, our method outperforms a state-of-the-art optimization-based approach (Impactor) by a 3x speedup during gate traversal maneuvers. 
     Furthermore, the learned policies achieve successful zero-shot sim-to-real transfer, demonstrating remarkable agility and safety in real-world experiments.
   `,
-  bibtex: `@article{cao2025flare,
+  bibtex: `@article{cao2026flare,
   title={FLARE: Agile Flights for Quadrotor Cable-Suspended Payload System via Reinforcement Learning},
   author={Cao, Dongcheng and Zhou, Jin and Wang, Xian and Li, Shuo},
-  journal={arXiv preprint arXiv:2508.09797},
-  year={2025}
+  journal={IEEE Robotics and Automation Letters},
+  year={2026},
+  publisher={IEEE}
 }`,
   links: {
     pdf: "#", // PDF 链接
@@ -45,7 +46,6 @@ const COLORS = {
 
 // --- 组件部分 ---
 
-// 修改后的 Button 组件：接收 iconSrc (图片路径) 而不是 Icon 组件
 const Button = ({ iconSrc, text, href }) => (
   <a 
     href={href}
@@ -72,7 +72,6 @@ const AuthorBlock = () => (
     <div className="flex flex-wrap justify-center gap-x-10 gap-y-2 text-lg font-medium text-slate-800 mb-4">
       {paperData.authors.map((author, idx) => (
         <span key={idx} className="relative">
-          {/* 这里添加了超链接 */}
           <a 
             href={author.url} 
             target="_blank" 
@@ -145,18 +144,23 @@ const ScenarioShowcase = () => {
           </ul>
         </div>
         
+        {/* 使用 Video 标签代替 GIF，以解决文件过大问题 */}
         <div className="md:col-span-3 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
-           <img 
-             src="./scenario1.gif" 
-             alt="Scenario I: Agile Waypoint Passing" 
-             className="w-full h-auto object-cover" 
-           />
+           <video 
+             autoPlay 
+             loop 
+             muted 
+             playsInline 
+             className="w-full h-auto object-cover"
+           >
+             <source src="./scenario1.mp4" type="video/mp4" />
+             Your browser does not support the video tag.
+           </video>
         </div>
       </div>
 
       {/* Scenario 2 */}
       <div className="grid md:grid-cols-5 gap-8 items-center">
-        {/* Text 部分：在桌面端通过 order-2 放在右边 */}
         <div className="md:col-span-2 md:order-2">
           <div className="flex items-center gap-3 mb-4">
             <div className="bg-purple-100 p-2 rounded-full text-purple-700"><Target size={24} /></div>
@@ -179,11 +183,16 @@ const ScenarioShowcase = () => {
         </div>
         
         <div className="md:col-span-3 md:order-1 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
-           <img 
-             src="./scenario2.gif" 
-             alt="Scenario II: Payload Targeting" 
-             className="w-full h-auto object-cover" 
-           />
+           <video 
+             autoPlay 
+             loop 
+             muted 
+             playsInline 
+             className="w-full h-auto object-cover"
+           >
+             <source src="./scenario2.mp4" type="video/mp4" />
+             Your browser does not support the video tag.
+           </video>
         </div>
       </div>
 
@@ -215,11 +224,16 @@ const ScenarioShowcase = () => {
         </div>
         
         <div className="md:col-span-3 w-full bg-slate-100 rounded-xl border border-slate-300 overflow-hidden shadow-md">
-           <img 
-             src="./scenario3.gif" 
-             alt="Scenario III: Agile Gate Traversal" 
-             className="w-full h-auto object-cover" 
-           />
+           <video 
+             autoPlay 
+             loop 
+             muted 
+             playsInline 
+             className="w-full h-auto object-cover"
+           >
+             <source src="./scenario3.mp4" type="video/mp4" />
+             Your browser does not support the video tag.
+           </video>
         </div>
       </div>
 
@@ -368,7 +382,7 @@ export default function RobotPaperPage() {
 
         {/* Footer */}
         <footer className="mt-24 py-8 border-t border-slate-200 text-center text-slate-500 text-sm">
-          <div className="mb-2">
+          <div className="mb-4">
             <span className="font-bold text-slate-700">College of Control Science and Engineering</span> | Zhejiang University
           </div>
           <p>
