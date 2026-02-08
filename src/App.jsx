@@ -21,19 +21,23 @@ const paperData = {
     Notably, our method outperforms a state-of-the-art optimization-based approach (Impactor) by a 3x speedup during gate traversal maneuvers. 
     Furthermore, the learned policies achieve successful zero-shot sim-to-real transfer, demonstrating remarkable agility and safety in real-world experiments.
   `,
-  bibtex: `@article{cao2026flare,
-  title={FLARE: Agile Flights for Quadrotor Cable-Suspended Payload System via Reinforcement Learning},
+  bibtex: `@ARTICLE{11373839,
   author={Cao, Dongcheng and Zhou, Jin and Wang, Xian and Li, Shuo},
-  journal={IEEE Robotics and Automation Letters},
+  journal={IEEE Robotics and Automation Letters}, 
+  title={FLARE: Agile Flights for Quadrotor Cable-Suspended Payload System via Reinforcement Learning}, 
   year={2026},
-  publisher={IEEE}
-}`,
+  volume={},
+  number={},
+  pages={1-8},
+  keywords={Payloads;Quadrotors;Planning;Logic gates;Vectors;Navigation;Safety;Reinforcement learning;Real-time systems;Dynamics},
+  doi={10.1109/LRA.2026.3662598}}
+`,
   links: {
-    pdf: "#", // PDF 链接
-    arxiv: "#", // ArXiv 链接
+    pdf: "https://ieeexplore.ieee.org/document/11373839", // PDF 链接
+    arxiv: "https://arxiv.org/abs/2508.09797", // ArXiv 链接
     code: "https://github.com/BEI11HAI/Flare",
     youtube: "https://youtu.be/CASn9SbnMHo", // YouTube 链接
-    bilibili: "#", // Bilibili 链接
+    bilibili: "https://www.bilibili.com/video/BV1cBFTz6Eq7/?spm_id_from=333.1387.favlist.content.click&vd_source=3a757a9cdd97a3eeaf5f80ae50b97b4d", // Bilibili 链接
   }
 };
 
@@ -274,7 +278,7 @@ export default function RobotPaperPage() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="font-bold text-xl tracking-tight text-slate-800 flex items-center gap-2">
             <span className="bg-[#003f88] text-white px-2 py-0.5 rounded font-serif">ZJU</span>
-            <span>NESC-Lab</span>
+            <span>NeSC-Lab</span>
           </div>
           <div className="hidden md:flex gap-6 text-sm font-medium text-slate-600">
             <a href="#abstract" className="hover:text-[#003f88]">Abstract</a>
